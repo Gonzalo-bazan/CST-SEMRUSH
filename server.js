@@ -31,7 +31,8 @@ app.use('/', createProxyMiddleware({
 }));
 
 // Iniciar el servidor
-const port = 3000; // El puerto en el que el servidor estará escuchando
-app.listen(port, () => {
-    console.log(`Servidor proxy corriendo en http://localhost:${port}`);
+const PORT = process.env.PORT || 3000; // Usa el puerto proporcionado por Heroku o, en su defecto, el puerto 3000
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
