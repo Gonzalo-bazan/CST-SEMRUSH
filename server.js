@@ -29,6 +29,7 @@ async function leerCookies(req, res, next) {
         const herramienta = await Herramienta.findOne({ where: { id: 2 } });
         if (herramienta) {
             const cookiesCadena = herramienta.cookies;
+            console.log(cookiesCadena)
             req.cookiesDB = cookiesCadena.split('; ').reduce((acumulador, cookie) => {
                 const [clave, valor] = cookie.split('=');
                 acumulador[clave] = valor;
@@ -49,7 +50,8 @@ app.use('/', createProxyMiddleware({
     changeOrigin: true,
     onProxyReq: (proxyReq, req, res) => {
         if (req.cookiesDB) {
-            const cookieHeader = Object.entries(req.cookiesDB).map(([key, value]) => `${key}=${value}`).join('; ');
+            const cookieHeader = Object.entries(req.cookiesDB).map(([key, value]) => 
+                `${key}=${encodeURIComponent(value)}`).join('; ');
             proxyReq.setHeader('Cookie', cookieHeader);
         }
     },
