@@ -15,6 +15,14 @@ async function connectToDatabase() {
     }
 }
 
+sequelize.sync()
+    .then(() => {
+        console.log('La tabla Usuarios se ha sincronizado con éxito con la base de datos.');
+    })
+    .catch((error) => {
+        console.error('Error al sincronizar la tabla Usuarios:', error);
+    });
+
 // Middleware personalizado para leer cookies de la base de datos
 async function leerCookies(req, res, next) {
     try {
